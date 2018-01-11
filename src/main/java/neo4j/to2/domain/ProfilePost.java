@@ -1,15 +1,15 @@
 package neo4j.to2.domain;
 
-import org.neo4j.ogm.annotation.GeneratedValue;
-import org.neo4j.ogm.annotation.Id;
-import org.neo4j.ogm.annotation.NodeEntity;
-import org.neo4j.ogm.annotation.Relationship;
+import org.neo4j.ogm.annotation.*;
 
 @NodeEntity
-public class ProfilePost {
+public class ProfilePost implements Comparable<ProfilePost>{
     @Id
     @GeneratedValue
     private Long profilePostID;
+
+    @Property
+    private long timestamp;
 
     @Relationship(type = "WRITTEN_BY", direction = Relationship.UNDIRECTED)
     private User creator;
@@ -22,6 +22,10 @@ public class ProfilePost {
 
     public ProfilePost(Long profilePostID) {
         this.profilePostID = profilePostID;
+    }
+
+    public ProfilePost(long timestamp, String text){
+        this.timestamp = timestamp;
     }
 
     public Long getProfilePostID() {
@@ -46,5 +50,20 @@ public class ProfilePost {
 
     public void setOwner(User owner) {
         this.owner = owner;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    @Override
+    public int compareTo(ProfilePost o) {
+        if(this.timestamp > o.timestamp)
+            return 1;
+        return -1;
     }
 }

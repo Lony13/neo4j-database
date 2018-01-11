@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,6 +19,9 @@ public class ProfilePostService {
 
     @Autowired
     private ProfilePostRepository profilePostRepository;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private UserRepository userRepository;
@@ -71,5 +76,28 @@ public class ProfilePostService {
             number = optUser.get().getProfilePosts().size();
 
         return optUser.get().getProfilePosts().subList(0, number);
+    }
+
+    public List<ProfilePost> getFriendsProfilePosts(long userID, int from, int to){
+        User user = userService.getUser(userID);
+        List<ProfilePost> profilePostsList = new ArrayList<>();
+        if(user.getProfilePosts() != null)
+            profilePostsList.addAll(user.getProfilePosts());
+        List<User> friends = user.getFriends();
+
+        if(friends != null) {
+            for (User friend : friends) {
+                if (friend.getProfilePosts() != null)
+                    profilePostsList.addAll(friend.getProfilePosts());
+            }
+        }
+
+        Collections.sort(profilePostsList);
+
+        if(profilePostsList.size() < from)
+            return Collections.emptyList();
+        else if(profilePostsList.size() < to)
+            return profilePostsList.subList(from, profilePostsList.size());
+        return profilePostsList.subList(from, to);
     }
 }

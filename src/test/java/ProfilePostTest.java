@@ -42,6 +42,7 @@ public class ProfilePostTest {
 
         userService.create(user1);
         userService.create(user2);
+        userService.createRelationshipFriend(user1.getUserID(), user2.getUserID());
         profilePostService.create(profilePost1);
         profilePostService.create(profilePost2);
         profilePostService.create(profilePost3);
@@ -49,6 +50,7 @@ public class ProfilePostTest {
         profilePostService.addOwnerToProfilePost(2, 3);
         profilePostService.addOwnerToProfilePost(2, 4);
         profilePostService.addOwnerToProfilePost(2, 5);
+        profilePostService.addOwnerToProfilePost(1, 5);
     }
 
     @Test
@@ -93,5 +95,11 @@ public class ProfilePostTest {
 
         profilePost = profilePostRepository.findById((long) 3);
         Assert.assertFalse(profilePost.isPresent());
+    }
+
+    @Test
+    public void getFriendsProfilePostsTest(){
+        List<ProfilePost> profilePostsList = profilePostService.getFriendsProfilePosts(1, 0 , 5);
+        Assert.assertEquals(profilePostsList.size(), 4);
     }
 }

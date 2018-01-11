@@ -106,6 +106,7 @@ public class DBTest {
 
         userService.createRelationshipFriend(userID,friendID);
         userService.createRelationshipFriend(userID,friend2ID);
+//        userService.createRelationshipFriend(friend3ID,friend2ID);
         chatService.addUserToChat(chatID,userID);
         forumThreadService.setCreator(f1ID, userID);
         forumThreadService.setCreator(f2ID, friendID);
@@ -149,5 +150,9 @@ public class DBTest {
         List<User> similarUsers = userService.findSimilarUsers(userID, 10);
         for(User u : similarUsers)
             System.out.println(u.getFirstName());
+
+        List<ProfilePost> profilePostsList = profilePostService.getFriendsProfilePosts(userID, 0, 2);
+        for(ProfilePost p : profilePostsList)
+            System.out.println(p.getTimestamp());
     }
 }
