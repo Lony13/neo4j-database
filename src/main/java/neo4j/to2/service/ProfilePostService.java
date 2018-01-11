@@ -26,15 +26,15 @@ public class ProfilePostService {
     @Autowired
     private UserRepository userRepository;
 
-    public ProfilePost create(ProfilePost profilePost) {
+    public ProfilePost createProfilePost(ProfilePost profilePost) {
         return profilePostRepository.save(profilePost);
     }
 
-    public ProfilePost update(ProfilePost profilePost) {
+    public ProfilePost updateProfilePost(ProfilePost profilePost) {
         return profilePostRepository.save(profilePost);
     }
 
-    public void delete(ProfilePost profilePost){
+    public void deleteProfilePost(ProfilePost profilePost){
         profilePostRepository.delete(profilePost);
     }
 

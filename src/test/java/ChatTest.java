@@ -56,12 +56,12 @@ public class ChatTest {
         chat.addMessage(m2);
         u1.addChat(chat);
         chat.addParticipant(u1);
-        chatService.create(chat);
-        messageService.create(m1);
-        messageService.create(m2);
-        messageService.create(m3);
-        userService.create(u1);
-        userService.create(u2);
+        chatService.createChat(chat);
+        messageService.createMessage(m1);
+        messageService.createMessage(m2);
+        messageService.createMessage(m3);
+        userService.createUser(u1);
+        userService.createUser(u2);
         chatService.addUserToChat(1,5);
     }
 

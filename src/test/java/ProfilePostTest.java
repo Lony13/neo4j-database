@@ -40,12 +40,12 @@ public class ProfilePostTest {
         ProfilePost profilePost2 = new ProfilePost((long) 4);
         ProfilePost profilePost3 = new ProfilePost((long) 5);
 
-        userService.create(user1);
-        userService.create(user2);
+        userService.createUser(user1);
+        userService.createUser(user2);
         userService.createRelationshipFriend(user1.getUserID(), user2.getUserID());
-        profilePostService.create(profilePost1);
-        profilePostService.create(profilePost2);
-        profilePostService.create(profilePost3);
+        profilePostService.createProfilePost(profilePost1);
+        profilePostService.createProfilePost(profilePost2);
+        profilePostService.createProfilePost(profilePost3);
         profilePostService.addCreatorToProfilePost(1, 3);
         profilePostService.addOwnerToProfilePost(2, 3);
         profilePostService.addOwnerToProfilePost(2, 4);

@@ -1,9 +1,6 @@
 package neo4j.to2.service;
 
-import neo4j.to2.domain.Answer;
-import neo4j.to2.domain.Chat;
-import neo4j.to2.domain.ForumThread;
-import neo4j.to2.domain.User;
+import neo4j.to2.domain.*;
 import neo4j.to2.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,15 +16,15 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public User create(User user){
+    public User createUser(User user){
         return userRepository.save(user);
     }
 
-    public User update(User user){
+    public User updateUser(User user){
         return userRepository.save(user);
     }
 
-    public void delete(User user){
+    public void deleteUser(User user){
         userRepository.delete(user);
     }
 
@@ -72,15 +69,15 @@ public class UserService {
         return optUser.get().getChats();
     }
 
-    public List<ForumThread> getUserForumThreads(long userID, int number) {
+    public List<Topic> getUserTopics(long userID, int number) {
         Optional<User> optUser = userRepository.findById(userID);
         if(!optUser.isPresent())
             return null;
 
-        if(optUser.get().getForumThreads().size() < number)
-            number = optUser.get().getForumThreads().size();
+        if(optUser.get().getTopics().size() < number)
+            number = optUser.get().getTopics().size();
 
-        return optUser.get().getForumThreads().subList(0, number);
+        return optUser.get().getTopics().subList(0, number);
     }
 
     public List<Answer> getUserForumAnswers(long userID, int number) {

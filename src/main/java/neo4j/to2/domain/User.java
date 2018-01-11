@@ -12,10 +12,19 @@ public class User {
     private Long userID;
 
     @Property
+    private Long tokenID;
+
+    @Property
     private String firstName;
 
     @Property
+    private String lastName;
+
+    @Property
     private String login;
+
+    @Property
+    private byte[] image;
 
     @Relationship(type = "FRIEND_OF")
     private List<User> friends;
@@ -36,7 +45,7 @@ public class User {
     private List<Answer> answers;
 
     @Relationship(type = "CREATES", direction = Relationship.UNDIRECTED)
-    private List<ForumThread> forumThreads;
+    private List<Topic> topics;
 
     @Relationship(type = "PLUSES", direction = Relationship.UNDIRECTED)
     private List<Answer> pluses;
@@ -57,10 +66,19 @@ public class User {
         this.login = login;
     }
 
-    public User(Long userID, String firstName, String login) {
-        this.userID = userID;
+    public User(Long tokenID, String firstName, String lastName, String login) {
+        this.tokenID = tokenID;
         this.firstName = firstName;
+        this.lastName = lastName;
         this.login = login;
+    }
+
+    public User(Long tokenID, String firstName, String lastName, String login, byte[] image) {
+        this.tokenID = tokenID;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.login = login;
+        this.image = image;
     }
 
     public long getUserID() {
@@ -95,28 +113,12 @@ public class User {
         this.friends = friends;
     }
 
-    public void addFriend(User user){
-        if(friends == null){
-            friends = new ArrayList<>();
-        }
-
-        friends.add(user);
-    }
-
     public List<ProfilePost> getWrittenProfilePosts() {
         return writtenProfilePosts;
     }
 
     public void setWrittenProfilePosts(List<ProfilePost> writtenProfilePosts) {
         this.writtenProfilePosts = writtenProfilePosts;
-    }
-
-    public void addWrittenProfilePost(ProfilePost writtenProfilePost){
-        if(writtenProfilePosts == null){
-            writtenProfilePosts = new ArrayList<>();
-        }
-
-        writtenProfilePosts.add(writtenProfilePost);
     }
 
     public List<ProfilePost> getProfilePosts() {
@@ -127,27 +129,12 @@ public class User {
         this.profilePosts = profilePosts;
     }
 
-    public void addProfilePost(ProfilePost profilePost){
-        if(profilePosts == null){
-            profilePosts = new ArrayList<>();
-        }
-
-        profilePosts.add(profilePost);
-    }
-
     public List<Chat> getChats() {
         return chats;
     }
 
     public void setChats(List<Chat> chats) {
         this.chats = chats;
-    }
-
-    public void addChat(Chat chat){
-        if(chats == null){
-            chats = new ArrayList<>();
-        }
-        chats.add(chat);
     }
 
     public List<Message> getMessages() {
@@ -158,19 +145,94 @@ public class User {
         this.messages = messages;
     }
 
-    public void addMessage(Message message){
-        if(messages == null){
-            messages = new ArrayList<>();
-        }
-        messages.add(message);
-    }
-
     public List<Answer> getAnswers() {
         return answers;
     }
 
     public void setAnswers(List<Answer> answers) {
         this.answers = answers;
+    }
+
+    public List<Topic> getTopics() {
+        return topics;
+    }
+
+    public void setTopics(List<Topic> topics) {
+        this.topics = topics;
+    }
+
+    public List<Answer> getPluses() {
+        return pluses;
+    }
+
+    public void setPluses(List<Answer> pluses) {
+        this.pluses = pluses;
+    }
+
+    public void setUserID(Long userID) {
+        this.userID = userID;
+    }
+
+    public Long getTokenID() {
+        return tokenID;
+    }
+
+    public void setTokenID(Long tokenID) {
+        this.tokenID = tokenID;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
+    public void addFriend(User user){
+        if(friends == null){
+            friends = new ArrayList<>();
+        }
+
+        friends.add(user);
+    }
+
+    public void addWrittenProfilePost(ProfilePost writtenProfilePost){
+        if(writtenProfilePosts == null){
+            writtenProfilePosts = new ArrayList<>();
+        }
+
+        writtenProfilePosts.add(writtenProfilePost);
+    }
+
+    public void addProfilePost(ProfilePost profilePost){
+        if(profilePosts == null){
+            profilePosts = new ArrayList<>();
+        }
+
+        profilePosts.add(profilePost);
+    }
+
+    public void addChat(Chat chat){
+        if(chats == null){
+            chats = new ArrayList<>();
+        }
+        chats.add(chat);
+    }
+
+    public void addMessage(Message message){
+        if(messages == null){
+            messages = new ArrayList<>();
+        }
+        messages.add(message);
     }
 
     public void addAnswer(Answer answer){
@@ -180,27 +242,11 @@ public class User {
         answers.add(answer);
     }
 
-    public List<ForumThread> getForumThreads() {
-        return forumThreads;
-    }
-
-    public void setForumThreads(List<ForumThread> forumThreads) {
-        this.forumThreads = forumThreads;
-    }
-
-    public void addForumThread(ForumThread forumThread){
-        if(forumThreads == null){
-            forumThreads = new ArrayList<>();
+    public void addTopic(Topic topic){
+        if(topics == null){
+            topics = new ArrayList<>();
         }
-        forumThreads.add(forumThread);
-    }
-
-    public List<Answer> getPluses() {
-        return pluses;
-    }
-
-    public void setPluses(List<Answer> pluses) {
-        this.pluses = pluses;
+        topics.add(topic);
     }
 
     public void addPlus(Answer plus){
@@ -220,7 +266,10 @@ public class User {
     public String toString() {
         return "User{" +
                 "userID=" + userID +
+                ", tokenID=" + tokenID +
                 ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", login='" + login + '\'' +
                 '}';
     }
 }

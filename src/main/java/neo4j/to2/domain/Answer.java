@@ -1,9 +1,6 @@
 package neo4j.to2.domain;
 
-import org.neo4j.ogm.annotation.GeneratedValue;
-import org.neo4j.ogm.annotation.Id;
-import org.neo4j.ogm.annotation.NodeEntity;
-import org.neo4j.ogm.annotation.Relationship;
+import org.neo4j.ogm.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,8 +11,11 @@ public class Answer {
     @GeneratedValue
     private Long answerID;
 
+    @Property
+    private String text;
+
     @Relationship(type = "BELONGS_TO", direction = Relationship.UNDIRECTED)
-    private ForumThread forumThread;
+    private Topic topic;
 
     @Relationship(type = "WRITTEN_BY", direction = Relationship.UNDIRECTED)
     private User creator;
@@ -29,6 +29,10 @@ public class Answer {
         this.answerID = answerID;
     }
 
+    public Answer(String text) {
+        this.text = text;
+    }
+
     public Long getAnswerID() {
         return answerID;
     }
@@ -37,12 +41,12 @@ public class Answer {
         this.answerID = answerID;
     }
 
-    public ForumThread getForumThread() {
-        return forumThread;
+    public Topic getTopic() {
+        return topic;
     }
 
-    public void setForumThread(ForumThread forumThread) {
-        this.forumThread = forumThread;
+    public void setTopic(Topic topic) {
+        this.topic = topic;
     }
 
     public User getCreator() {
@@ -59,6 +63,14 @@ public class Answer {
 
     public void setUsersPlus(List<User> usersPlus) {
         this.usersPlus = usersPlus;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 
     public void addUserPlus(User userPlus){

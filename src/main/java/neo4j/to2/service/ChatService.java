@@ -26,15 +26,15 @@ public class ChatService {
     @Autowired
     private MessageRepository messageRepository;
 
-    public Chat create(Chat chat){
+    public Chat createChat(Chat chat){
         return chatRepository.save(chat);
     }
 
-    public Chat update(Chat chat){
+    public Chat updateChat(Chat chat){
         return chatRepository.save(chat);
     }
 
-    public void delete(Chat chat){
+    public void deleteChat(Chat chat){
         chatRepository.delete(chat);
     }
 

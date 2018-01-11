@@ -6,14 +6,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -40,10 +37,10 @@ public class UserTest {
     private ChatRepository chatRepository;
 
     @Autowired
-    private ForumThreadService forumThreadService;
+    private TopicService topicService;
 
     @Autowired
-    private ForumThreadRepository forumThreadRepository;
+    private TopicRepository topicRepository;
 
     @Autowired
     private AnswerRepository answerRepository;
@@ -56,11 +53,12 @@ public class UserTest {
         User user = new User((long)1, "TestUser");
         User friend = new User((long)2, "Friend");
         User friend2 = new User((long)4, "Friend2");
+        User notFriend = new User((long)12, "NotFriend");
         Chat chat = new Chat((long) 5);
         ProfilePost profilePost = new ProfilePost((long) 3);
-        ForumThread f1 = new ForumThread((long) 6);
-        ForumThread f2 = new ForumThread((long) 7);
-        ForumThread f3 = new ForumThread((long) 8);
+        Topic f1 = new Topic((long) 6);
+        Topic f2 = new Topic((long) 7);
+        Topic f3 = new Topic((long) 8);
         Answer a1 = new Answer((long) 9);
         Answer a2 = new Answer((long) 10);
         Answer a3 = new Answer((long) 11);
@@ -70,22 +68,24 @@ public class UserTest {
         profilePost.setOwner(user);
         user.addProfilePost(profilePost);
 
-        forumThreadService.create(f1);
-        forumThreadService.create(f2);
-        forumThreadService.create(f3);
-        answerService.create(a1);
-        answerService.create(a2);
-        answerService.create(a3);
-        userService.create(friend2);
-        userService.create(user);
-        userService.create(friend);
+        topicService.createTopic(f1);
+        topicService.createTopic(f2);
+        topicService.createTopic(f3);
+        answerService.createAnswer(a1);
+        answerService.createAnswer(a2);
+        answerService.createAnswer(a3);
+        userService.createUser(friend2);
+        userService.createUser(user);
+        userService.createUser(friend);
+        userService.createUser(notFriend);
         userService.createRelationshipFriend(1,2);
         userService.createRelationshipFriend(1,4);
-        profilePostService.create(profilePost);
+        userService.createRelationshipFriend(12,4);
+        profilePostService.createProfilePost(profilePost);
         chatService.addUserToChat(5,1);
-        forumThreadService.setCreator(6, 1);
-        forumThreadService.setCreator(6, 2);
-        forumThreadService.setCreator(6, 3);
+        topicService.setCreator(6, 1);
+        topicService.setCreator(6, 2);
+        topicService.setCreator(6, 3);
         answerService.setCreator(9, 1);
         answerService.setCreator(10, 1);
         answerService.setCreator(11, 1);
@@ -103,9 +103,9 @@ public class UserTest {
     @Test
     public void getUserPlusesQueryTest(){
         User user = new User("Lony");
-        userService.create(user);
+        userService.createUser(user);
         Answer answer = new Answer();
-        answerService.create(answer);
+        answerService.createAnswer(answer);
         answerService.addPlus(answer.getAnswerID(), user.getUserID());
 
         User optUser = userRepository.getUserFromId(user.getUserID());
@@ -115,19 +115,19 @@ public class UserTest {
     }
 
     @Test
-    public void getUserForumThreadsTest(){
+    public void getUserTopicsTest(){
         Optional<User> optUser = userRepository.findById((long) 1);
-        List<ForumThread> forumThreads = userService.getUserForumThreads((long)1, 2);
+        List<Topic> topics = userService.getUserTopics((long)1, 2);
 
-        Assert.assertTrue(optUser.get().getForumThreads().containsAll(forumThreads));
+        Assert.assertTrue(optUser.get().getTopics().containsAll(topics));
     }
 
     @Test
     public void getUserForumAnswersTest(){
         Optional<User> optUser = userRepository.findById((long) 1);
-        List<Answer> answerThreads = userService.getUserForumAnswers((long)1, 2);
+        List<Answer> answerList = userService.getUserForumAnswers((long)1, 2);
 
-        Assert.assertTrue(optUser.get().getAnswers().containsAll(answerThreads));
+        Assert.assertTrue(optUser.get().getAnswers().containsAll(answerList));
     }
 
     @Test
@@ -191,4 +191,11 @@ public class UserTest {
         optUser = userRepository.findById((long) 1);
         Assert.assertFalse(optUser.isPresent());
     }
+
+//    @Test
+//    public void findSimilarUsersTest(){
+//        List<User> usersList = userService.findSimilarUsers(252, 10);
+//
+//        Assert.assertEquals(usersList.get(0).getFirstName(), "NotFriend");
+//    }
 }

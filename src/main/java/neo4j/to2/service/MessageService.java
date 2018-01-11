@@ -15,18 +15,17 @@ public class MessageService {
     @Autowired
     private MessageRepository messageRepository;
 
-    public Message create(Message message){
+    public Message createMessage(Message message){
         return messageRepository.save(message);
     }
 
-    public Message update(Message message){
+    public Message updateMessage(Message message){
         return messageRepository.save(message);
     }
 
-    public void delete(Message message){
+    public void deleteMessage(Message message){
         messageRepository.delete(message);
     }
-
 
     public Message getMessage(long messageID) {
         Optional<Message> optMessage = messageRepository.findById(messageID);

@@ -11,6 +11,9 @@ public class Message {
     @Property
     private String text;
 
+    @Property
+    private long timestamp;
+
     @Relationship(type = "BELONGS_TO", direction = Relationship.UNDIRECTED)
     private Chat chat;
 
@@ -27,6 +30,11 @@ public class Message {
     public Message(Long messageID, String text) {
         this.messageID = messageID;
         this.text = text;
+    }
+
+    public Message(String text, long timestamp) {
+        this.text = text;
+        this.timestamp = timestamp;
     }
 
     public Message(String text) {
@@ -63,5 +71,13 @@ public class Message {
 
     public void setCreator(User creator) {
         this.creator = creator;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
     }
 }

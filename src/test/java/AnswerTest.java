@@ -1,11 +1,11 @@
 import neo4j.to2.domain.Answer;
-import neo4j.to2.domain.ForumThread;
+import neo4j.to2.domain.Topic;
 import neo4j.to2.domain.User;
 import neo4j.to2.repository.AnswerRepository;
-import neo4j.to2.repository.ForumThreadRepository;
+import neo4j.to2.repository.TopicRepository;
 import neo4j.to2.repository.UserRepository;
 import neo4j.to2.service.AnswerService;
-import neo4j.to2.service.ForumThreadService;
+import neo4j.to2.service.TopicService;
 import neo4j.to2.service.UserService;
 import org.junit.Assert;
 import org.junit.Before;
@@ -30,10 +30,10 @@ public class AnswerTest {
     private AnswerService answerService;
 
     @Autowired
-    private ForumThreadService forumThreadService;
+    private TopicService topicService;
 
     @Autowired
-    private ForumThreadRepository forumThreadRepository;
+    private TopicRepository topicRepository;
 
     @Autowired
     private UserService userService;
@@ -44,12 +44,12 @@ public class AnswerTest {
     @Before
     public void prepareData(){
         Answer answer = new Answer((long) 1);
-        ForumThread forumThread = new ForumThread((long) 2);
+        Topic topic = new Topic((long) 2);
         User u = new User((long) 3, "koc");
-        userService.create(u);
-        forumThreadService.create(forumThread);
-        answerService.create(answer);
-        answerService.setForumThread(2, 1);
+        userService.createUser(u);
+        topicService.createTopic(topic);
+        answerService.createAnswer(answer);
+        answerService.setTopic(2, 1);
         answerService.addPlus(1,3);
         answerService.setCreator(1,3);
     }
@@ -73,12 +73,12 @@ public class AnswerTest {
     }
 
     @Test
-    public void setForumThreadTest(){
-        Optional<ForumThread> optForumThread = forumThreadRepository.findById((long) 2);
+    public void setTopicTest(){
+        Optional<Topic> optTopic = topicRepository.findById((long) 2);
         Optional<Answer> optAnswer = answerRepository.findById((long) 1);
 
-        Assert.assertTrue(optForumThread.get().getAnswers().contains(optAnswer.get()));
-        Assert.assertEquals(optAnswer.get().getForumThread(), optForumThread.get());
+        Assert.assertTrue(optTopic.get().getAnswers().contains(optAnswer.get()));
+        Assert.assertEquals(optAnswer.get().getTopic(), optTopic.get());
     }
 
     @Test

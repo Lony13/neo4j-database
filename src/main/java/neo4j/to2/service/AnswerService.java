@@ -1,10 +1,10 @@
 package neo4j.to2.service;
 
 import neo4j.to2.domain.Answer;
-import neo4j.to2.domain.ForumThread;
+import neo4j.to2.domain.Topic;
 import neo4j.to2.domain.User;
 import neo4j.to2.repository.AnswerRepository;
-import neo4j.to2.repository.ForumThreadRepository;
+import neo4j.to2.repository.TopicRepository;
 import neo4j.to2.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,17 +24,17 @@ public class AnswerService {
     private UserRepository userRepository;
 
     @Autowired
-    private ForumThreadRepository forumThreadRepository;
+    private TopicRepository topicRepository;
 
-    public Answer create(Answer answer){
+    public Answer createAnswer(Answer answer){
         return answerRepository.save(answer);
     }
 
-    public Answer update(Answer answer){
+    public Answer updateAnswer(Answer answer){
         return answerRepository.save(answer);
     }
 
-    public void delete(Answer answer){
+    public void deleteAnswer(Answer answer){
         answerRepository.delete(answer);
     }
 
@@ -43,14 +43,14 @@ public class AnswerService {
         return optAnswer.orElse(null);
     }
 
-    public boolean setForumThread(long forumThreadID, long answerID){
-        Optional<ForumThread> optForumThread = forumThreadRepository.findById(forumThreadID);
+    public boolean setTopic(long topicID, long answerID){
+        Optional<Topic> optTopic = topicRepository.findById(topicID);
         Optional<Answer> optAnswer = answerRepository.findById(answerID);
-        if(!optForumThread.isPresent() || !optAnswer.isPresent())
+        if(!optTopic.isPresent() || !optAnswer.isPresent())
             return false;
 
-        optAnswer.get().setForumThread(optForumThread.get());
-        optForumThread.get().addAnswer(optAnswer.get());
+        optAnswer.get().setTopic(optTopic.get());
+        optTopic.get().addAnswer(optAnswer.get());
 
         return true;
     }

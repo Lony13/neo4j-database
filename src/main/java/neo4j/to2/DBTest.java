@@ -32,10 +32,10 @@ public class DBTest {
     private ChatRepository chatRepository;
 
     @Autowired
-    private ForumThreadService forumThreadService;
+    private TopicService topicService;
 
     @Autowired
-    private ForumThreadRepository forumThreadRepository;
+    private TopicRepository topicRepository;
 
     @Autowired
     private AnswerRepository answerRepository;
@@ -47,7 +47,7 @@ public class DBTest {
     private MessageService messageService;
 
     @Autowired
-    private CategoryService categoryService;
+    private SectionService sectionService;
 
     public void generateDataAndTest(){
         User user = new User("TestUser");
@@ -56,15 +56,15 @@ public class DBTest {
         User friend3 = new User("NotFriend");
         Chat chat = new Chat("FirstChat");
         ProfilePost profilePost = new ProfilePost();
-        ForumThread f1 = new ForumThread();
-        ForumThread f2 = new ForumThread();
-        ForumThread f3 = new ForumThread();
+        Topic f1 = new Topic();
+        Topic f2 = new Topic();
+        Topic f3 = new Topic();
         Answer a1 = new Answer();
         Answer a2 = new Answer();
         Answer a3 = new Answer();
         Message message1 = new Message("Hej");
         Message message2 = new Message("Siemka");
-        Category category = new Category("Java");
+        Section section = new Section("Java");
 
 
         profilePost.setCreator(friend);
@@ -72,79 +72,79 @@ public class DBTest {
         profilePost.setOwner(user);
         user.addProfilePost(profilePost);
 
-        forumThreadService.create(f1);
-        forumThreadService.create(f2);
-        forumThreadService.create(f3);
-        answerService.create(a1);
-        answerService.create(a2);
-        answerService.create(a3);
-        userService.create(friend2);
-        userService.create(user);
-        userService.create(friend);
-        userService.create(friend3);
-        chatService.create(chat);
-        profilePostService.create(profilePost);
-        messageService.create(message1);
-        messageService.create(message2);
-        categoryService.create(category);
+        topicService.createTopic(f1);
+        topicService.createTopic(f2);
+        topicService.createTopic(f3);
+        answerService.createAnswer(a1);
+        answerService.createAnswer(a2);
+        answerService.createAnswer(a3);
+        userService.createUser(friend2);
+        userService.createUser(user);
+        userService.createUser(friend);
+        userService.createUser(friend3);
+        chatService.createChat(chat);
+        profilePostService.createProfilePost(profilePost);
+        messageService.createMessage(message1);
+        messageService.createMessage(message2);
+        sectionService.createSection(section);
 
         long userID = user.getUserID();
         long friendID = friend.getUserID();
         long friend2ID = friend2.getUserID();
         long friend3ID = friend3.getUserID();
         long profilePostID = profilePost.getProfilePostID();
-        long f1ID = f1.getForumThreadID();
-        long f2ID = f2.getForumThreadID();
-        long f3ID = f3.getForumThreadID();
+        long f1ID = f1.getTopicID();
+        long f2ID = f2.getTopicID();
+        long f3ID = f3.getTopicID();
         long a1ID = a1.getAnswerID();
         long a2ID = a2.getAnswerID();
         long a3ID = a3.getAnswerID();
         long chatID = chat.getChatID();
         long message1ID = message1.getMessageID();
         long message2ID = message2.getMessageID();
-        long categoryID = category.getCategoryID();
+        long sectionID = section.getSectionID();
 
         userService.createRelationshipFriend(userID,friendID);
         userService.createRelationshipFriend(userID,friend2ID);
 //        userService.createRelationshipFriend(friend3ID,friend2ID);
         chatService.addUserToChat(chatID,userID);
-        forumThreadService.setCreator(f1ID, userID);
-        forumThreadService.setCreator(f2ID, friendID);
-        forumThreadService.setCreator(f3ID, friend2ID);
+        topicService.setCreator(f1ID, userID);
+        topicService.setCreator(f2ID, friendID);
+        topicService.setCreator(f3ID, friend2ID);
         answerService.setCreator(a1ID, userID);
         answerService.setCreator(a2ID, userID);
         answerService.setCreator(a3ID, userID);
         answerService.addPlus(a1ID, friendID);
         answerService.addPlus(a2ID, friendID);
         answerService.addPlus(a3ID, friend3ID);
-        answerService.setForumThread(f1ID, a1ID);
-        answerService.setForumThread(f1ID, a2ID);
-        answerService.setForumThread(f2ID, a3ID);
+        answerService.setTopic(f1ID, a1ID);
+        answerService.setTopic(f1ID, a2ID);
+        answerService.setTopic(f2ID, a3ID);
         chatService.sendMessage(chatID, message1ID, friendID);
         chatService.sendMessage(chatID, message2ID, friend2ID);
-        forumThreadService.setCategory(f1ID, categoryID);
-        forumThreadService.setCategory(f2ID, categoryID);
-        forumThreadService.setCategory(f3ID, categoryID);
+        topicService.setSection(f1ID, sectionID);
+        topicService.setSection(f2ID, sectionID);
+        topicService.setSection(f3ID, sectionID);
 
-        forumThreadService.update(f1);
-        forumThreadService.update(f2);
-        forumThreadService.update(f3);
-        answerService.update(a1);
-        answerService.update(a2);
-        answerService.update(a3);
-        userService.update(friend2);
-        userService.update(user);
-        userService.update(friend);
-        chatService.update(chat);
-        messageService.update(message1);
-        messageService.update(message2);
-        categoryService.update(category);
+        topicService.updateTopic(f1);
+        topicService.updateTopic(f2);
+        topicService.updateTopic(f3);
+        answerService.updateAnswer(a1);
+        answerService.updateAnswer(a2);
+        answerService.updateAnswer(a3);
+        userService.updateUser(friend2);
+        userService.updateUser(user);
+        userService.updateUser(friend);
+        chatService.updateChat(chat);
+        messageService.updateMessage(message1);
+        messageService.updateMessage(message2);
+        sectionService.updateSection(section);
 
         Optional<User> optUser = userRepository.findById(userID);
         System.out.println(optUser.get().toString());
 
-        List<ForumThread> forumThreads = userService.getUserForumThreads(userID, 2);
-        for(ForumThread f : forumThreads)
+        List<Topic> topics = userService.getUserTopics(userID, 2);
+        for(Topic f : topics)
             System.out.println(f.toString());
 
         List<User> similarUsers = userService.findSimilarUsers(userID, 10);

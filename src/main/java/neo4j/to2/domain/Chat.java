@@ -46,14 +46,6 @@ public class Chat {
         this.messages = messages;
     }
 
-    public void addMessage(Message message){
-        if(messages == null){
-            messages = new ArrayList<>();
-        }
-
-        messages.add(message);
-    }
-
     public List<User> getParticipants() {
         return participants;
     }
@@ -62,19 +54,27 @@ public class Chat {
         this.participants = participants;
     }
 
-    public void addParticipant(User participant){
-        if(participants == null){
-            participants = new ArrayList<>();
-        }
-
-        participants.add(participant);
-    }
-
     public String getChatName() {
         return chatName;
     }
 
     public void setChatName(String chatName) {
         this.chatName = chatName;
+    }
+
+    public void addMessage(Message message){
+        if(messages == null){
+            messages = new ArrayList<>();
+        }
+
+        messages.add(message);
+    }
+
+    public void addParticipant(User participant){
+        if(participants == null){
+            participants = new ArrayList<>();
+        }
+
+        participants.add(participant);
     }
 }

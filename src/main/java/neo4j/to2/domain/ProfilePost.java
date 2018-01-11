@@ -9,6 +9,9 @@ public class ProfilePost implements Comparable<ProfilePost>{
     private Long profilePostID;
 
     @Property
+    private String text;
+
+    @Property
     private long timestamp;
 
     @Relationship(type = "WRITTEN_BY", direction = Relationship.UNDIRECTED)
@@ -26,6 +29,7 @@ public class ProfilePost implements Comparable<ProfilePost>{
 
     public ProfilePost(long timestamp, String text){
         this.timestamp = timestamp;
+        this.text = text;
     }
 
     public Long getProfilePostID() {
@@ -58,6 +62,14 @@ public class ProfilePost implements Comparable<ProfilePost>{
 
     public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 
     @Override

@@ -25,7 +25,7 @@ public class MessageTest {
     @Before
     public void prepareData(){
         Message message = new Message((long) 1, "Rakoczy ma oczy");
-        messageService.create(message);
+        messageService.createMessage(message);
     }
 
     @Test
