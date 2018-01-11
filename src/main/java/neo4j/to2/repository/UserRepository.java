@@ -3,11 +3,22 @@ package neo4j.to2.repository;
 import neo4j.to2.domain.User;
 import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface UserRepository extends Neo4jRepository<User, Long> {
 
     @Query("MATCH (n) WHERE id(n)={0} RETURN n")
     User getUserFromId(Long userID);
+
+    @Query("MATCH (u1:User), (u2:User), " +
+            "path = shortestPath((u1)-[*..2]-(u2)) " +
+            "WHERE u1 <> u2 AND NOT ((u1)-[:FRIEND_OF]-(u2)) AND id(u1)={0} " +
+            "RETURN u2 " +
+            "ORDER BY LENGTH(path) DESC " +
+            "LIMIT {1}")
+    List<User> findSimilarUsers(long userID, int maxUsers);
 }

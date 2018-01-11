@@ -105,4 +105,8 @@ public class UserService {
         //TODO
         return null;
     }
+
+    public List<User> findSimilarUsers(long userID, int maxUsers){
+        return userRepository.findSimilarUsers(userID, maxUsers);
+    }
 }

@@ -53,6 +53,7 @@ public class DBTest {
         User user = new User("TestUser");
         User friend = new User("Friend");
         User friend2 = new User("Friend2");
+        User friend3 = new User("NotFriend");
         Chat chat = new Chat("FirstChat");
         ProfilePost profilePost = new ProfilePost();
         ForumThread f1 = new ForumThread();
@@ -80,6 +81,7 @@ public class DBTest {
         userService.create(friend2);
         userService.create(user);
         userService.create(friend);
+        userService.create(friend3);
         chatService.create(chat);
         profilePostService.create(profilePost);
         messageService.create(message1);
@@ -89,6 +91,7 @@ public class DBTest {
         long userID = user.getUserID();
         long friendID = friend.getUserID();
         long friend2ID = friend2.getUserID();
+        long friend3ID = friend3.getUserID();
         long profilePostID = profilePost.getProfilePostID();
         long f1ID = f1.getForumThreadID();
         long f2ID = f2.getForumThreadID();
@@ -112,6 +115,7 @@ public class DBTest {
         answerService.setCreator(a3ID, userID);
         answerService.addPlus(a1ID, friendID);
         answerService.addPlus(a2ID, friendID);
+        answerService.addPlus(a3ID, friend3ID);
         answerService.setForumThread(f1ID, a1ID);
         answerService.setForumThread(f1ID, a2ID);
         answerService.setForumThread(f2ID, a3ID);
@@ -137,13 +141,13 @@ public class DBTest {
 
         Optional<User> optUser = userRepository.findById(userID);
         System.out.println(optUser.get().toString());
+
         List<ForumThread> forumThreads = userService.getUserForumThreads(userID, 2);
         for(ForumThread f : forumThreads)
             System.out.println(f.toString());
 
-//        List<User> usr = userService.findSimilarUsers(friend2ID, 3);
-//        for(User u : usr){
-//            System.out.println(u.getFirstName());
-//        }
+        List<User> similarUsers = userService.findSimilarUsers(userID, 10);
+        for(User u : similarUsers)
+            System.out.println(u.getFirstName());
     }
 }
