@@ -114,4 +114,42 @@ public class TopicService {
 
         return optTopic.map(answer -> answer.getUsersPlus().size()).orElse(-1);
     }
+
+    public boolean addTopicMinus(long userID, long topicID) {
+        Optional<User> optUser = userRepository.findById(userID);
+        Optional<Topic> optTopic = topicRepository.findById(topicID);
+        if(!optUser.isPresent() || !optTopic.isPresent())
+            return false;
+
+        optTopic.get().addUserMinus(optUser.get());
+        optUser.get().addMinussedTopic(optTopic.get());
+        return true;
+    }
+
+    public boolean removeTopicMinus(long userID, long topicID) {
+        Optional<User> optUser = userRepository.findById(userID);
+        Optional<Topic> optTopic = topicRepository.findById(topicID);
+        if(!optUser.isPresent() || !optTopic.isPresent())
+            return false;
+
+        optTopic.get().removeUserMinus(optUser.get());
+        optUser.get().removeMinussedTopic(optTopic.get());
+        return true;
+    }
+
+    public List<User> getMinusesTopic(long topicID) {
+        Optional<Topic> optTopic = topicRepository.findById(topicID);
+        if(!optTopic.isPresent())
+            return null;
+
+        return optTopic.get().getUsersMinus();
+    }
+
+    public int getMinusesCountTopic(long topicID) {
+        Optional<Topic> optTopic = topicRepository.findById(topicID);
+        if(!optTopic.isPresent())
+            return -1;
+
+        return optTopic.map(answer -> answer.getUsersMinus().size()).orElse(-1);
+    }
 }

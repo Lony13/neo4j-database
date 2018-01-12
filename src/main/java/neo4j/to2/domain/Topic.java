@@ -26,6 +26,9 @@ public class Topic {
     @Relationship(type = "PLUSED_BY", direction = Relationship.UNDIRECTED)
     private List<User> usersPlus;
 
+    @Relationship(type = "MINUSSED_BY", direction = Relationship.UNDIRECTED)
+    private List<User> usersMinus;
+
     public Topic() {
     }
 
@@ -107,6 +110,27 @@ public class Topic {
     public void removeUserPlus(User userPlus){
         if(usersPlus != null){
             usersPlus.remove(userPlus);
+        }
+    }
+
+    public List<User> getUsersMinus() {
+        return usersMinus;
+    }
+
+    public void setUsersMinus(List<User> usersMinus) {
+        this.usersMinus = usersMinus;
+    }
+
+    public void addUserMinus(User userMinus){
+        if(usersMinus == null){
+            usersMinus = new ArrayList<>();
+        }
+        usersMinus.add(userMinus);
+    }
+
+    public void removeUserMinus(User userMinus){
+        if(usersMinus != null){
+            usersMinus.remove(userMinus);
         }
     }
 }

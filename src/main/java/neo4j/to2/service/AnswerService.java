@@ -66,6 +66,17 @@ public class AnswerService {
         return true;
     }
 
+    public boolean addMinus(long answerID, long userID){
+        Optional<User> optUser = userRepository.findById(userID);
+        Optional<Answer> optAnswer = answerRepository.findById(answerID);
+        if(!optUser.isPresent() || !optAnswer.isPresent())
+            return false;
+
+        optAnswer.get().addUserMinus(optUser.get());
+        optUser.get().addMinussedAnswer(optAnswer.get());
+        return true;
+    }
+
     public boolean setCreator(long answerID, long userID){
         Optional<User> optUser = userRepository.findById(userID);
         Optional<Answer> optAnswer = answerRepository.findById(answerID);
@@ -88,6 +99,17 @@ public class AnswerService {
         return true;
     }
 
+    public boolean removeAnswerMinus(long userID, long answerID) {
+        Optional<User> optUser = userRepository.findById(userID);
+        Optional<Answer> optAnswer = answerRepository.findById(answerID);
+        if(!optUser.isPresent() || !optAnswer.isPresent())
+            return false;
+
+        optAnswer.get().removeUserMinus(optUser.get());
+        optUser.get().removeMinussedAnswer(optAnswer.get());
+        return true;
+    }
+
     public List<User> getPlusesAnswer(long answerID) {
         Optional<Answer> optAnswer = answerRepository.findById(answerID);
         if(!optAnswer.isPresent())
@@ -96,11 +118,27 @@ public class AnswerService {
         return optAnswer.get().getUsersPlus();
     }
 
+    public List<User> getMinusesAnswer(long answerID) {
+        Optional<Answer> optAnswer = answerRepository.findById(answerID);
+        if(!optAnswer.isPresent())
+            return null;
+
+        return optAnswer.get().getUsersMinus();
+    }
+
     public int getPlusesCountAnswer(long answerID) {
         Optional<Answer> optAnswer = answerRepository.findById(answerID);
         if(!optAnswer.isPresent())
             return -1;
 
         return optAnswer.map(answer -> answer.getUsersPlus().size()).orElse(-1);
+    }
+
+    public int getMinusesCountAnswer(long answerID) {
+        Optional<Answer> optAnswer = answerRepository.findById(answerID);
+        if(!optAnswer.isPresent())
+            return -1;
+
+        return optAnswer.map(answer -> answer.getUsersMinus().size()).orElse(-1);
     }
 }

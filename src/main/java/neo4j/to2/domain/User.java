@@ -53,6 +53,12 @@ public class User {
     @Relationship(type = "PLUSES", direction = Relationship.UNDIRECTED)
     private List<Topic> plusedTopics;
 
+    @Relationship(type = "MINUSES", direction = Relationship.UNDIRECTED)
+    private List<Answer> minussedAnswers;
+
+    @Relationship(type = "MINUSES", direction = Relationship.UNDIRECTED)
+    private List<Topic> minussedTopics;
+
     public User(){}
 
     public User(String firstName) {
@@ -180,6 +186,22 @@ public class User {
         this.plusedTopics = pluses;
     }
 
+    public List<Answer> getMinusedAnswers() {
+        return minussedAnswers;
+    }
+
+    public void setMinusedAnswers(List<Answer> pluses) {
+        this.minussedAnswers = pluses;
+    }
+
+    public List<Topic> getMinusedTopics() {
+        return minussedTopics;
+    }
+
+    public void setMinusedTopics(List<Topic> pluses) {
+        this.minussedTopics = pluses;
+    }
+
     public void setUserID(Long userID) {
         this.userID = userID;
     }
@@ -283,6 +305,32 @@ public class User {
     public void removePlusedTopic(Topic plus){
         if(plusedTopics != null){
             plusedTopics.remove(plus);
+        }
+    }
+
+    public void addMinussedAnswer(Answer minus){
+        if(minussedAnswers == null){
+            minussedAnswers = new ArrayList<>();
+        }
+        minussedAnswers.add(minus);
+    }
+
+    public void removeMinussedAnswer(Answer minus){
+        if(minussedAnswers != null){
+            minussedAnswers.remove(minus);
+        }
+    }
+
+    public void addMinussedTopic(Topic minus){
+        if(minussedTopics == null){
+            minussedTopics = new ArrayList<>();
+        }
+        minussedTopics.add(minus);
+    }
+
+    public void removeMinussedTopic(Topic minus){
+        if(minussedTopics != null){
+            minussedTopics.remove(minus);
         }
     }
 

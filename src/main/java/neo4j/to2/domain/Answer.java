@@ -23,6 +23,9 @@ public class Answer {
     @Relationship(type = "PLUSED_BY", direction = Relationship.UNDIRECTED)
     private List<User> usersPlus;
 
+    @Relationship(type = "MINUSSED_BY", direction = Relationship.UNDIRECTED)
+    private List<User> usersMinus;
+
     public Answer(){}
 
     public Answer(Long answerID) {
@@ -65,6 +68,14 @@ public class Answer {
         this.usersPlus = usersPlus;
     }
 
+    public List<User> getUsersMinus() {
+        return usersMinus;
+    }
+
+    public void setUsersMinus(List<User> usersMinus) {
+        this.usersMinus = usersMinus;
+    }
+
     public String getText() {
         return text;
     }
@@ -83,6 +94,19 @@ public class Answer {
     public void removeUserPlus(User userPlus){
         if(usersPlus != null){
             usersPlus.remove(userPlus);
+        }
+    }
+
+    public void addUserMinus(User userMinus){
+        if(usersMinus == null){
+            usersMinus = new ArrayList<>();
+        }
+        usersMinus.add(userMinus);
+    }
+
+    public void removeUserMinus(User userMinus){
+        if(usersMinus != null){
+            usersMinus.remove(userMinus);
         }
     }
 }

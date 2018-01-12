@@ -49,6 +49,7 @@ public class TopicTest {
         Topic topic = new Topic((long) 1);
         Section sec = new Section((long) 2);
         User u = new User((long) 3, "loy");
+        User u2 = new User((long) 4, "koc");
         Answer a1 = new Answer((long) 4);
         Answer a2 = new Answer((long) 5);
         Answer a3 = new Answer((long) 6);
@@ -57,6 +58,7 @@ public class TopicTest {
         answerService.createAnswer(a2);
         answerService.createAnswer(a3);
         userService.createUser(u);
+        userService.createUser(u2);
         topicService.createTopic(topic);
         sectionService.createSection(sec);
         topicService.setSection(1,2);
@@ -65,6 +67,47 @@ public class TopicTest {
         answerService.setTopic(1,5);
         answerService.setTopic(1,6);
         topicService.addTopicPlus(3, 1);
+        topicService.addTopicMinus(4,1);
+    }
+
+    @Test
+    public void addMinusTest(){
+        Optional<User> optUser = userRepository.findById((long) 4);
+        Optional<Topic> optTopic = topicRepository.findById((long) 1);
+
+        Assert.assertTrue(optUser.get().getMinusedTopics().contains(optTopic.get()));
+        Assert.assertTrue(optTopic.get().getUsersMinus().contains(optUser.get()));
+    }
+
+    @Test
+    public void removeTopicMinusTest(){
+        Optional<User> optUser = userRepository.findById((long) 4);
+        Optional<Topic> optTopic = topicRepository.findById((long) 1);
+
+        boolean result = topicService.removeTopicMinus(4, 1);
+
+        Assert.assertTrue(result);
+        Assert.assertFalse(optUser.get().getMinusedTopics().contains(optTopic.get()));
+        Assert.assertFalse(optTopic.get().getUsersMinus().contains(optUser.get()));
+    }
+
+    @Test
+    public void getMinusesTopicTest(){
+        Optional<User> optUser = userRepository.findById((long) 4);
+        Optional<Topic> optTopic = topicRepository.findById((long) 1);
+
+        List<User> usersPlus = topicService.getMinusesTopic(1);
+
+        Assert.assertTrue(optTopic.get().getUsersMinus().containsAll(usersPlus));
+    }
+
+    @Test
+    public void getMinusesCountTopicTest(){
+        Optional<Topic> optTopic = topicRepository.findById((long) 1);
+        int count = topicService.getMinusesCountTopic(1);
+
+        Assert.assertEquals(optTopic.get().getUsersMinus().size(), count);
+        Assert.assertEquals(1, count);
     }
 
     @Test
