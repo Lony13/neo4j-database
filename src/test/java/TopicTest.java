@@ -64,6 +64,47 @@ public class TopicTest {
         answerService.setTopic(1,4);
         answerService.setTopic(1,5);
         answerService.setTopic(1,6);
+        topicService.addTopicPlus(3, 1);
+    }
+
+    @Test
+    public void addPlus(){
+        Optional<User> optUser = userRepository.findById((long) 3);
+        Optional<Topic> optTopic = topicRepository.findById((long) 1);
+
+        Assert.assertTrue(optUser.get().getPlusedTopics().contains(optTopic.get()));
+        Assert.assertTrue(optTopic.get().getUsersPlus().contains(optUser.get()));
+    }
+
+    @Test
+    public void removeTopicPlusTest(){
+        Optional<User> optUser = userRepository.findById((long) 3);
+        Optional<Topic> optTopic = topicRepository.findById((long) 1);
+
+        boolean result = topicService.removeTopicPlus(3, 1);
+
+        Assert.assertTrue(result);
+        Assert.assertFalse(optUser.get().getPlusedTopics().contains(optTopic.get()));
+        Assert.assertFalse(optTopic.get().getUsersPlus().contains(optUser.get()));
+    }
+
+    @Test
+    public void getPlusesTopicTest(){
+        Optional<User> optUser = userRepository.findById((long) 3);
+        Optional<Topic> optTopic = topicRepository.findById((long) 1);
+
+        List<User> usersPlus = topicService.getPlusesTopic(1);
+
+        Assert.assertTrue(optTopic.get().getUsersPlus().containsAll(usersPlus));
+    }
+
+    @Test
+    public void getPlusesCountTopicTest(){
+        Optional<Topic> optTopic = topicRepository.findById((long) 1);
+        int count = topicService.getPlusesCountTopic(1);
+
+        Assert.assertEquals(optTopic.get().getUsersPlus().size(), count);
+        Assert.assertEquals(1, count);
     }
 
     @Test

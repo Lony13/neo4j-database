@@ -93,9 +93,9 @@ public class UserService {
 
     public int getUserPluses(long userID) {
         Optional<User> optUser = userRepository.findById(userID);
-        if(optUser.get().getPluses() == null)
+        if(optUser.get().getPlusedAnswers() == null)
             return -1;
-        return optUser.map(user -> user.getPluses().size()).orElse(-1);
+        return optUser.map(user -> user.getPlusedAnswers().size()).orElse(-1);
     }
 
     public List<User> findSpecificUsers(User user) {

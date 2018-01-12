@@ -48,7 +48,10 @@ public class User {
     private List<Topic> topics;
 
     @Relationship(type = "PLUSES", direction = Relationship.UNDIRECTED)
-    private List<Answer> pluses;
+    private List<Answer> plusedAnswers;
+
+    @Relationship(type = "PLUSES", direction = Relationship.UNDIRECTED)
+    private List<Topic> plusedTopics;
 
     public User(){}
 
@@ -161,12 +164,20 @@ public class User {
         this.topics = topics;
     }
 
-    public List<Answer> getPluses() {
-        return pluses;
+    public List<Answer> getPlusedAnswers() {
+        return plusedAnswers;
     }
 
-    public void setPluses(List<Answer> pluses) {
-        this.pluses = pluses;
+    public void setPlusedAnswers(List<Answer> pluses) {
+        this.plusedAnswers = pluses;
+    }
+
+    public List<Topic> getPlusedTopics() {
+        return plusedTopics;
+    }
+
+    public void setPlusedTopics(List<Topic> pluses) {
+        this.plusedTopics = pluses;
     }
 
     public void setUserID(Long userID) {
@@ -249,16 +260,29 @@ public class User {
         topics.add(topic);
     }
 
-    public void addPlus(Answer plus){
-        if(pluses == null){
-            pluses = new ArrayList<>();
+    public void addPlusedAnswer(Answer plus){
+        if(plusedAnswers == null){
+            plusedAnswers = new ArrayList<>();
         }
-        pluses.add(plus);
+        plusedAnswers.add(plus);
     }
 
-    public void removePlus(Answer plus){
-        if(pluses != null){
-            pluses.remove(plus);
+    public void removePlusedAnswer(Answer plus){
+        if(plusedAnswers != null){
+            plusedAnswers.remove(plus);
+        }
+    }
+
+    public void addPlusedTopic(Topic plus){
+        if(plusedTopics == null){
+            plusedTopics = new ArrayList<>();
+        }
+        plusedTopics.add(plus);
+    }
+
+    public void removePlusedTopic(Topic plus){
+        if(plusedTopics != null){
+            plusedTopics.remove(plus);
         }
     }
 

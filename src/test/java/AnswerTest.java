@@ -68,7 +68,7 @@ public class AnswerTest {
         Optional<User> optUser = userRepository.findById((long) 3);
         Optional<Answer> optAnswer = answerRepository.findById((long) 1);
 
-        Assert.assertTrue(optUser.get().getPluses().contains(optAnswer.get()));
+        Assert.assertTrue(optUser.get().getPlusedAnswers().contains(optAnswer.get()));
         Assert.assertTrue(optAnswer.get().getUsersPlus().contains(optUser.get()));
     }
 
@@ -96,7 +96,7 @@ public class AnswerTest {
         boolean result = answerService.removeAnswerPlus(3, 1);
 
         Assert.assertTrue(result);
-        Assert.assertFalse(optUser.get().getPluses().contains(optAnswer.get()));
+        Assert.assertFalse(optUser.get().getPlusedAnswers().contains(optAnswer.get()));
         Assert.assertFalse(optAnswer.get().getUsersPlus().contains(optUser.get()));
     }
 

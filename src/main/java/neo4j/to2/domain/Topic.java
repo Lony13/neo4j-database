@@ -23,6 +23,9 @@ public class Topic {
     @Relationship(type = "CREATED_BY", direction = Relationship.UNDIRECTED)
     private User creator;
 
+    @Relationship(type = "PLUSED_BY", direction = Relationship.UNDIRECTED)
+    private List<User> usersPlus;
+
     public Topic() {
     }
 
@@ -84,5 +87,26 @@ public class Topic {
             answers = new ArrayList<>();
         }
         answers.add(answer);
+    }
+
+    public List<User> getUsersPlus() {
+        return usersPlus;
+    }
+
+    public void setUsersPlus(List<User> usersPlus) {
+        this.usersPlus = usersPlus;
+    }
+
+    public void addUserPlus(User userPlus){
+        if(usersPlus == null){
+            usersPlus = new ArrayList<>();
+        }
+        usersPlus.add(userPlus);
+    }
+
+    public void removeUserPlus(User userPlus){
+        if(usersPlus != null){
+            usersPlus.remove(userPlus);
+        }
     }
 }

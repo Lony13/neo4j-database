@@ -62,7 +62,7 @@ public class AnswerService {
             return false;
 
         optAnswer.get().addUserPlus(optUser.get());
-        optUser.get().addPlus(optAnswer.get());
+        optUser.get().addPlusedAnswer(optAnswer.get());
         return true;
     }
 
@@ -84,7 +84,7 @@ public class AnswerService {
             return false;
 
         optAnswer.get().removeUserPlus(optUser.get());
-        optUser.get().removePlus(optAnswer.get());
+        optUser.get().removePlusedAnswer(optAnswer.get());
         return true;
     }
 

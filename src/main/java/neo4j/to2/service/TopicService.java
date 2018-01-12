@@ -78,22 +78,40 @@ public class TopicService {
     }
 
     public boolean addTopicPlus(long userID, long topicID) {
-        //TODO
-        return false;
+        Optional<User> optUser = userRepository.findById(userID);
+        Optional<Topic> optTopic = topicRepository.findById(topicID);
+        if(!optUser.isPresent() || !optTopic.isPresent())
+            return false;
+
+        optTopic.get().addUserPlus(optUser.get());
+        optUser.get().addPlusedTopic(optTopic.get());
+        return true;
     }
 
     public boolean removeTopicPlus(long userID, long topicID) {
-        //TODO
-        return false;
+        Optional<User> optUser = userRepository.findById(userID);
+        Optional<Topic> optTopic = topicRepository.findById(topicID);
+        if(!optUser.isPresent() || !optTopic.isPresent())
+            return false;
+
+        optTopic.get().removeUserPlus(optUser.get());
+        optUser.get().removePlusedTopic(optTopic.get());
+        return true;
     }
 
     public List<User> getPlusesTopic(long topicID) {
-        //TODO
-        return null;
+        Optional<Topic> optTopic = topicRepository.findById(topicID);
+        if(!optTopic.isPresent())
+            return null;
+
+        return optTopic.get().getUsersPlus();
     }
 
     public int getPlusesCountTopic(long topicID) {
-        //TODO
-        return 0;
+        Optional<Topic> optTopic = topicRepository.findById(topicID);
+        if(!optTopic.isPresent())
+            return -1;
+
+        return optTopic.map(answer -> answer.getUsersPlus().size()).orElse(-1);
     }
 }

@@ -97,7 +97,7 @@ public class UserTest {
     public void getUserPlusesTest(){
         Optional<User> optUser = userRepository.findById((long) 2);
         int num = userService.getUserPluses((long) 2);
-        Assert.assertEquals(optUser.get().getPluses().size(), num);
+        Assert.assertEquals(optUser.get().getPlusedAnswers().size(), num);
     }
 
     @Test
@@ -111,7 +111,7 @@ public class UserTest {
         User optUser = userRepository.getUserFromId(user.getUserID());
         int num = userService.getUserPluses((user.getUserID()));
 
-        Assert.assertEquals(optUser.getPluses().size(), num);
+        Assert.assertEquals(optUser.getPlusedAnswers().size(), num);
     }
 
     @Test
