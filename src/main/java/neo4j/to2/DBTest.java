@@ -54,6 +54,7 @@ public class DBTest {
         User friend = new User("Friend", "Best");
         User friend2 = new User("Friend2");
         User friend3 = new User("NotFriend");
+        User hacker = new User("supaHaka", "totallyNotHaka", "1234");
         Chat chat = new Chat("FirstChat");
         ProfilePost profilePost = new ProfilePost();
         Topic f1 = new Topic();
@@ -82,6 +83,7 @@ public class DBTest {
         userService.createUser(user);
         userService.createUser(friend);
         userService.createUser(friend3);
+        userService.createUser(hacker);
         chatService.createChat(chat);
         profilePostService.createProfilePost(profilePost);
         messageService.createMessage(message1);
@@ -92,6 +94,7 @@ public class DBTest {
         long friendID = friend.getUserID();
         long friend2ID = friend2.getUserID();
         long friend3ID = friend3.getUserID();
+        long hackerID = hacker.getUserID();
         long profilePostID = profilePost.getProfilePostID();
         long f1ID = f1.getTopicID();
         long f2ID = f2.getTopicID();
@@ -161,5 +164,8 @@ public class DBTest {
         List<User> usersList = userService.findSpecificUsers(sUser);
         for(User u : usersList)
             System.out.println(u.getFirstName());
+
+        User hck = userService.loginUser("totallyNotHaka", "1234");
+        System.out.println(hck.getFirstName());
     }
 }

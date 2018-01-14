@@ -48,9 +48,8 @@ public class UserService {
         return true;
     }
 
-    public int loginUser(String login, String password) {
-        //TODO
-        return 0;
+    public User loginUser(String login, String password) {
+        return userRepository.loginUser(login, password);
     }
 
     public List<User> getFriends(long userID) {

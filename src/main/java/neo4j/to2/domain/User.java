@@ -24,6 +24,9 @@ public class User {
     private String login;
 
     @Property
+    private String password;
+
+    @Property
     private byte[] image;
 
     @Relationship(type = "FRIEND_OF")
@@ -75,6 +78,12 @@ public class User {
         this.lastName = lastName;
     }
 
+    public User(String firstName, String login, String password) {
+        this.firstName = firstName;
+        this.login = login;
+        this.password = password;
+    }
+
     public User(Long tokenID, String firstName, String lastName, String login) {
         this.tokenID = tokenID;
         this.firstName = firstName;
@@ -87,6 +96,23 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.login = login;
+        this.image = image;
+    }
+
+    public User(Long tokenID, String firstName, String lastName, String login, String password) {
+        this.tokenID = tokenID;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.login = login;
+        this.password = password;
+    }
+
+    public User(Long tokenID, String firstName, String lastName, String login, String password, byte[] image) {
+        this.tokenID = tokenID;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.login = login;
+        this.password = password;
         this.image = image;
     }
 
@@ -221,6 +247,10 @@ public class User {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+    public String getPassword() { return password; }
+
+    public void setPassword(String password) { this.password = password; }
 
     public byte[] getImage() {
         return image;
