@@ -70,9 +70,9 @@ public class User {
         this.firstName = firstName;
     }
 
-    public User(String firstName, String login) {
+    public User(String firstName, String lastName) {
         this.firstName = firstName;
-        this.login = login;
+        this.lastName = lastName;
     }
 
     public User(Long tokenID, String firstName, String lastName, String login) {

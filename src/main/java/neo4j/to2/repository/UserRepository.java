@@ -14,6 +14,12 @@ public interface UserRepository extends Neo4jRepository<User, Long> {
     @Query("MATCH (n) WHERE id(n)={0} RETURN n")
     User getUserFromId(Long userID);
 
+    @Query("MATCH (u:User {firstName:{0}}) RETURN u")
+    List<User> getUserFromFirstName(String firstName);
+
+    @Query("MATCH (u:User {lastName:{0}}) RETURN u")
+    List<User> getUserFromLastName(String lastName);
+
     @Query("MATCH (u1:User), (u2:User), " +
             "path = shortestPath((u1)-[*..2]-(u2)) " +
             "WHERE u1 <> u2 AND NOT ((u1)-[:FRIEND_OF]-(u2)) AND id(u1)={0} " +

@@ -51,7 +51,7 @@ public class DBTest {
 
     public void generateDataAndTest(){
         User user = new User("TestUser");
-        User friend = new User("Friend");
+        User friend = new User("Friend", "Best");
         User friend2 = new User("Friend2");
         User friend3 = new User("NotFriend");
         Chat chat = new Chat("FirstChat");
@@ -154,5 +154,12 @@ public class DBTest {
         List<ProfilePost> profilePostsList = profilePostService.getFriendsProfilePosts(userID, 0, 2);
         for(ProfilePost p : profilePostsList)
             System.out.println(p.getTimestamp());
+
+        User sUser = new User();
+        sUser.setFirstName("Friend");
+        sUser.setLastName("Best");
+        List<User> usersList = userService.findSpecificUsers(sUser);
+        for(User u : usersList)
+            System.out.println(u.getFirstName());
     }
 }

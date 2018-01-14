@@ -99,8 +99,12 @@ public class UserService {
     }
 
     public List<User> findSpecificUsers(User user) {
-        //TODO
-        return null;
+        List<User> listFirstName = userRepository.getUserFromFirstName(user.getFirstName());
+        List<User> listLastName = userRepository.getUserFromLastName(user.getLastName());
+
+        listFirstName.retainAll(listLastName);
+        return listFirstName;
+
     }
 
     public List<User> findSimilarUsers(long userID, int maxUsers){
