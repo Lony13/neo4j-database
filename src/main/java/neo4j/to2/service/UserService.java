@@ -98,12 +98,43 @@ public class UserService {
     }
 
     public List<User> findSpecificUsers(User user) {
-        List<User> listFirstName = userRepository.getUserFromFirstName(user.getFirstName());
-        List<User> listLastName = userRepository.getUserFromLastName(user.getLastName());
+        List<User> resultList = null;
+        List<User> listFirstName, listLastName, listCountry, listCity, listAddress;
 
-        listFirstName.retainAll(listLastName);
-        return listFirstName;
+        if(user.getFirstName() != null){
+            listFirstName = userRepository.getUserFromFirstName(user.getFirstName());
+            resultList = listFirstName;
+        }
+        if(user.getLastName() != null){
+            listLastName = userRepository.getUserFromLastName(user.getLastName());
+            if(resultList != null)
+                resultList.retainAll(listLastName);
+            else
+                resultList = listLastName;
+        }
+        if(user.getCountry() != null){
+            listCountry = userRepository.getUserFromCountry(user.getCountry());
+            if(resultList != null)
+                resultList.retainAll(listCountry);
+            else
+                resultList = listCountry;
+        }
+        if(user.getCity() != null){
+            listCity = userRepository.getUserFromCity(user.getCity());
+            if(resultList != null)
+                resultList.retainAll(listCity);
+            else
+                resultList = listCity;
+        }
+        if(user.getAddress() != null){
+            listAddress = userRepository.getUserFromAddress(user.getAddress());
+            if(resultList != null)
+                resultList.retainAll(listAddress);
+            else
+                resultList = listAddress;
+        }
 
+        return resultList;
     }
 
     public List<User> findSimilarUsers(long userID, int maxUsers){

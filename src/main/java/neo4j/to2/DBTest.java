@@ -20,25 +20,13 @@ public class DBTest {
     private UserRepository userRepository;
 
     @Autowired
-    private ProfilePostRepository profilePostRepository;
-
-    @Autowired
     private ProfilePostService profilePostService;
 
     @Autowired
     private ChatService chatService;
 
     @Autowired
-    private ChatRepository chatRepository;
-
-    @Autowired
     private TopicService topicService;
-
-    @Autowired
-    private TopicRepository topicRepository;
-
-    @Autowired
-    private AnswerRepository answerRepository;
 
     @Autowired
     private AnswerService answerService;
@@ -54,6 +42,9 @@ public class DBTest {
         User friend = new User("Friend", "Best");
         User friend2 = new User("Friend2");
         User friend3 = new User("NotFriend");
+        User specific1 = new User("Joe", "Jones", "USA", "LA");
+        User specific2 = new User("John", "Smith", "USA", "LA");
+        User specific3 = new User("Mark", "Downey", "USA", "NY");
         User hacker = new User("supaHaka", "totallyNotHaka", "1234");
         Chat chat = new Chat("FirstChat");
         ProfilePost profilePost = new ProfilePost();
@@ -84,6 +75,9 @@ public class DBTest {
         userService.createUser(friend);
         userService.createUser(friend3);
         userService.createUser(hacker);
+        userService.createUser(specific1);
+        userService.createUser(specific2);
+        userService.createUser(specific3);
         chatService.createChat(chat);
         profilePostService.createProfilePost(profilePost);
         messageService.createMessage(message1);
@@ -109,7 +103,6 @@ public class DBTest {
 
         userService.createRelationshipFriend(userID,friendID);
         userService.createRelationshipFriend(userID,friend2ID);
-//        userService.createRelationshipFriend(friend3ID,friend2ID);
         chatService.addUserToChat(chatID,userID);
         topicService.setCreator(f1ID, userID);
         topicService.setCreator(f2ID, friendID);
@@ -159,8 +152,8 @@ public class DBTest {
             System.out.println(p.getTimestamp());
 
         User sUser = new User();
-        sUser.setFirstName("Friend");
-        sUser.setLastName("Best");
+        sUser.setCountry("USA");
+        sUser.setCity("LA");
         List<User> usersList = userService.findSpecificUsers(sUser);
         for(User u : usersList)
             System.out.println(u.getFirstName());

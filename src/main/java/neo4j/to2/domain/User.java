@@ -27,6 +27,21 @@ public class User {
     private String password;
 
     @Property
+    private String email;
+
+    @Property
+    private String phone;
+
+    @Property
+    private String country;
+
+    @Property
+    private String city;
+
+    @Property
+    private String address;
+
+    @Property
     private byte[] image;
 
     @Relationship(type = "FRIEND_OF")
@@ -91,6 +106,13 @@ public class User {
         this.login = login;
     }
 
+    public User(String firstName, String lastName, String country, String city) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.country = country;
+        this.city = city;
+    }
+
     public User(Long tokenID, String firstName, String lastName, String login, byte[] image) {
         this.tokenID = tokenID;
         this.firstName = firstName;
@@ -99,21 +121,17 @@ public class User {
         this.image = image;
     }
 
-    public User(Long tokenID, String firstName, String lastName, String login, String password) {
-        this.tokenID = tokenID;
+    public User(String firstName, String lastName, String login, String email,
+                String phone, String country, String city, String address, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.login = login;
+        this.email = email;
+        this.phone = phone;
+        this.country = country;
+        this.city = city;
+        this.address = address;
         this.password = password;
-    }
-
-    public User(Long tokenID, String firstName, String lastName, String login, String password, byte[] image) {
-        this.tokenID = tokenID;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.login = login;
-        this.password = password;
-        this.image = image;
     }
 
     public long getUserID() {
@@ -248,16 +266,76 @@ public class User {
         this.lastName = lastName;
     }
 
-    public String getPassword() { return password; }
-
-    public void setPassword(String password) { this.password = password; }
-
     public byte[] getImage() {
         return image;
     }
 
     public void setImage(byte[] image) {
         this.image = image;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public List<Answer> getMinussedAnswers() {
+        return minussedAnswers;
+    }
+
+    public void setMinussedAnswers(List<Answer> minussedAnswers) {
+        this.minussedAnswers = minussedAnswers;
+    }
+
+    public List<Topic> getMinussedTopics() {
+        return minussedTopics;
+    }
+
+    public void setMinussedTopics(List<Topic> minussedTopics) {
+        this.minussedTopics = minussedTopics;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public void addFriend(User user){
@@ -372,6 +450,11 @@ public class User {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", login='" + login + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", country='" + country + '\'' +
+                ", city='" + city + '\'' +
+                ", address='" + address + '\'' +
                 '}';
     }
 }

@@ -20,6 +20,15 @@ public interface UserRepository extends Neo4jRepository<User, Long> {
     @Query("MATCH (u:User {lastName:{0}}) RETURN u")
     List<User> getUserFromLastName(String lastName);
 
+    @Query("MATCH (u:User {country:{0}}) RETURN u")
+    List<User> getUserFromCountry(String country);
+
+    @Query("MATCH (u:User {city:{0}}) RETURN u")
+    List<User> getUserFromCity(String city);
+
+    @Query("MATCH (u:User {address:{0}}) RETURN u")
+    List<User> getUserFromAddress(String address);
+
     @Query("MATCH (u:User {login:{0}, password:{1}}) RETURN u")
     User loginUser(String login, String password);
 
