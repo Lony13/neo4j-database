@@ -29,8 +29,14 @@ public interface UserRepository extends Neo4jRepository<User, Long> {
     @Query("MATCH (u:User {address:{0}}) RETURN u")
     List<User> getUserFromAddress(String address);
 
-    @Query("MATCH (n:User) WHERE single(x IN n.languages WHERE x={0})  RETURN n")
+    @Query("MATCH (u:User) WHERE u.experience >= {0} RETURN u")
+    List<User> getUserFromExperience(int experience);
+
+    @Query("MATCH (u:User) WHERE single(x IN u.languages WHERE x={0})  RETURN u")
     List<User> getUserFromLanguage(String language);
+
+    @Query("MATCH (u:User) WHERE single(x IN u.programmingLanguages WHERE x={0})  RETURN u")
+    List<User> getUserFromProgrammingLanguage(String programmingLanguage);
 
     @Query("MATCH (u:User {login:{0}, password:{1}}) RETURN u")
     User loginUser(String login, String password);

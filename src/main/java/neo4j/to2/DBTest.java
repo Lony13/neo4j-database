@@ -59,7 +59,13 @@ public class DBTest {
         Section section = new Section("Java");
         hacker.addLanguage("Ugandan");
         hacker.addLanguage("Big_In_Japan");
-
+        specific1.setExperience(5);
+        specific2.setExperience(7);
+        specific3.setExperience(2);
+        specific1.addProgrammingLanguage("Java");
+        specific1.addProgrammingLanguage("Scala");
+        specific2.addProgrammingLanguage("Java");
+        specific2.addProgrammingLanguage("Scala");
 
         profilePost.setCreator(friend);
         friend.addWrittenProfilePost(profilePost);
@@ -161,7 +167,10 @@ public class DBTest {
             System.out.println(u.getFirstName());
 
         sUser = new User();
-        sUser.addLanguage("Ugandan");
+        sUser.setExperience(5);
+        sUser.setCountry("USA");
+        sUser.addProgrammingLanguage("Java");
+        sUser.addProgrammingLanguage("Scala");
         usersList = userService.findSpecificUsers(sUser);
         for(User u : usersList)
             System.out.println(u.getFirstName());

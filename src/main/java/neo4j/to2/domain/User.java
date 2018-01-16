@@ -42,10 +42,16 @@ public class User {
     private String address;
 
     @Property
+    private Integer experience;
+
+    @Property
     private byte[] image;
 
     @Property
     private List<String> languages;
+
+    @Property
+    private List<String> programmingLanguages;
 
     @Relationship(type = "FRIEND_OF")
     private List<User> friends;
@@ -341,6 +347,30 @@ public class User {
         this.password = password;
     }
 
+    public List<String> getLanguages(){
+        return languages;
+    }
+
+    public void setLanguages(List<String> languages) {
+        this.languages = languages;
+    }
+
+    public List<String> getProgrammingLanguages() {
+        return programmingLanguages;
+    }
+
+    public void setProgrammingLanguages(List<String> programmingLanguages) {
+        this.programmingLanguages = programmingLanguages;
+    }
+
+    public Integer getExperience() {
+        return experience;
+    }
+
+    public void setExperience(Integer experience) {
+        this.experience = experience;
+    }
+
     public void addFriend(User user){
         if(friends == null){
             friends = new ArrayList<>();
@@ -357,8 +387,12 @@ public class User {
         languages.add(lang);
     }
 
-    public List<String> getLanguages(){
-        return languages;
+    public void addProgrammingLanguage(String lang){
+        if(programmingLanguages == null){
+            programmingLanguages = new ArrayList<>();
+        }
+
+        programmingLanguages.add(lang);
     }
 
     public void addWrittenProfilePost(ProfilePost writtenProfilePost){

@@ -99,7 +99,8 @@ public class UserService {
 
     public List<User> findSpecificUsers(User user) {
         List<User> resultList = null;
-        List<User> listFirstName, listLastName, listCountry, listCity, listAddress, listLanguage;
+        List<User> listFirstName, listLastName, listCountry, listCity,
+                listAddress, listExperience ,listLanguage, listProgrammingLanguage;
 
         if(user.getFirstName() != null){
             listFirstName = userRepository.getUserFromFirstName(user.getFirstName());
@@ -133,6 +134,13 @@ public class UserService {
             else
                 resultList = listAddress;
         }
+        if(user.getExperience() != null){
+            listExperience = userRepository.getUserFromExperience(user.getExperience());
+            if(resultList != null)
+                resultList.retainAll(listExperience);
+            else
+                resultList = listExperience;
+        }
         if(user.getLanguages() != null){
             List<String> languages = user.getLanguages();
             for(String l : languages){
@@ -141,6 +149,16 @@ public class UserService {
                     resultList.retainAll(listLanguage);
                 else
                     resultList = listLanguage;
+            }
+        }
+        if(user.getProgrammingLanguages() != null){
+            List<String> programmingLanguages = user.getProgrammingLanguages();
+            for(String l : programmingLanguages){
+                listProgrammingLanguage = userRepository.getUserFromProgrammingLanguage(l);
+                if(resultList != null)
+                    resultList.retainAll(listProgrammingLanguage);
+                else
+                    resultList = listProgrammingLanguage;
             }
         }
 
