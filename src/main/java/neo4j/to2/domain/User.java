@@ -44,6 +44,9 @@ public class User {
     @Property
     private byte[] image;
 
+    @Property
+    private List<String> languages;
+
     @Relationship(type = "FRIEND_OF")
     private List<User> friends;
 
@@ -344,6 +347,18 @@ public class User {
         }
 
         friends.add(user);
+    }
+
+    public void addLanguage(String lang){
+        if(languages == null){
+            languages = new ArrayList<>();
+        }
+
+        languages.add(lang);
+    }
+
+    public List<String> getLanguages(){
+        return languages;
     }
 
     public void addWrittenProfilePost(ProfilePost writtenProfilePost){

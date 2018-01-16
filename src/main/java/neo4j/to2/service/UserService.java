@@ -99,7 +99,7 @@ public class UserService {
 
     public List<User> findSpecificUsers(User user) {
         List<User> resultList = null;
-        List<User> listFirstName, listLastName, listCountry, listCity, listAddress;
+        List<User> listFirstName, listLastName, listCountry, listCity, listAddress, listLanguage;
 
         if(user.getFirstName() != null){
             listFirstName = userRepository.getUserFromFirstName(user.getFirstName());
@@ -132,6 +132,16 @@ public class UserService {
                 resultList.retainAll(listAddress);
             else
                 resultList = listAddress;
+        }
+        if(user.getLanguages() != null){
+            List<String> languages = user.getLanguages();
+            for(String l : languages){
+                listLanguage = userRepository.getUserFromLanguage(l);
+                if(resultList != null)
+                    resultList.retainAll(listLanguage);
+                else
+                    resultList = listLanguage;
+            }
         }
 
         return resultList;

@@ -57,6 +57,8 @@ public class DBTest {
         Message message1 = new Message("Hej");
         Message message2 = new Message("Siemka");
         Section section = new Section("Java");
+        hacker.addLanguage("Ugandan");
+        hacker.addLanguage("Big_In_Japan");
 
 
         profilePost.setCreator(friend);
@@ -158,7 +160,16 @@ public class DBTest {
         for(User u : usersList)
             System.out.println(u.getFirstName());
 
+        sUser = new User();
+        sUser.addLanguage("Ugandan");
+        usersList = userService.findSpecificUsers(sUser);
+        for(User u : usersList)
+            System.out.println(u.getFirstName());
+
         User hck = userService.loginUser("totallyNotHaka", "1234");
         System.out.println(hck.getFirstName());
+        List<String> sprachen = hck.getLanguages();
+        for(String s : sprachen)
+            System.out.println(s);
     }
 }
