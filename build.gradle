@@ -34,4 +34,6 @@ dependencies {
     testCompile group: 'org.springframework', name: 'spring-test', version:'5.0.2.RELEASE'
     compile group: 'javax.servlet', name: 'javax.servlet-api', version:'3.0.1'
     compile group: 'com.github.jsimone', name: 'webapp-runner', version:'7.0.22.3'
+    compile group: 'org.springframework', name:'spring-messaging', version:'4.0.0.RELEASE'
+    compile group: 'org.springframework', name: 'spring-websocket', version: '5.0.0.RELEASE'
 }
