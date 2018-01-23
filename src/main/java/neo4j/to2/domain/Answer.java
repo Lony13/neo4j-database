@@ -25,6 +25,7 @@ public class Answer {
 
     @Relationship(type = "MINUSSED_BY", direction = Relationship.UNDIRECTED)
     private List<User> usersMinus;
+    private static Object id;
 
     public Answer(){}
 
@@ -34,6 +35,10 @@ public class Answer {
 
     public Answer(String text) {
         this.text = text;
+    }
+
+    public Long getId() {
+        return answerID;
     }
 
     public Long getAnswerID() {

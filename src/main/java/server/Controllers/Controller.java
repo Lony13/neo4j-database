@@ -4,10 +4,10 @@ import server.DAOs.*;
 import server.Validators.EmailExistsException;
 import server.Validators.IUserService;
 import server.Validators.UserService;
-import server.domain.Answer;
-import server.domain.Section;
-import server.domain.Topic;
-import server.domain.User;
+import neo4j.to2.domain.Answer;
+import neo4j.to2.domain.Section;
+import neo4j.to2.domain.Topic;
+import neo4j.to2.domain.User;
 import org.springframework.http.MediaType;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -18,9 +18,9 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
-import server.service.AnswerService;
-import server.service.SectionService;
-import server.service.TopicService;
+import neo4j.to2.service.AnswerService;
+import neo4j.to2.service.SectionService;
+import neo4j.to2.service.TopicService;
 
 import javax.validation.Valid;
 import java.text.SimpleDateFormat;
@@ -212,120 +212,120 @@ public class Controller {
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    @RequestMapping(value = "/getProfilePosts", method = RequestMethod.GET)
-    public List<ProfilePost> getProfilePosts(@RequestParam(value = "profileId") Integer profileId,
-                                             @RequestParam(value = "from") Integer from,
-                                             @RequestParam(value = "to") Integer to) {
+//    @RequestMapping(value = "/getProfilePosts", method = RequestMethod.GET)
+//    public List<ProfilePost> getProfilePosts(@RequestParam(value = "profileId") Integer profileId,
+//                                             @RequestParam(value = "from") Integer from,
+//                                             @RequestParam(value = "to") Integer to) {
+//
+//        return null;
+//    }
+//
+//
+//    @RequestMapping(value = "/createProfilePost", method = RequestMethod.POST)
+//    public void createPost(@RequestParam(value = "userToken") String userToken,
+//                           @RequestParam(value = "profilePostId") Integer profilePostId,
+//                           @RequestParam(value = "profilePostContent") ProfilePostContent profilePostContent) {
+//
+//    }
 
-        return null;
-    }
-
-
-    @RequestMapping(value = "/createProfilePost", method = RequestMethod.POST)
-    public void createPost(@RequestParam(value = "userToken") String userToken,
-                           @RequestParam(value = "profilePostId") Integer profilePostId,
-                           @RequestParam(value = "profilePostContent") ProfilePostContent profilePostContent) {
-
-    }
-
-    // jesli id =0 dodaj nowy profil
-    @RequestMapping(value = "/editProfile", method = RequestMethod.POST)
-    public void createProfile(@RequestParam(value = "profileData") ProfileData profileData) {
-
-    }
-
-    @RequestMapping(value = "/addPlus", method = RequestMethod.POST)
-    public void addPlus(@RequestParam(value = "postId") Integer postId,
-                        @RequestParam(value = "userToken") String userToken) {
-
-    }
-
-
-    @RequestMapping(value = "/chatSessions", method = RequestMethod.GET)
-    public List<Integer> getSessions(@RequestParam(value = "userToken") String userToken) {
-        return iChatDAO.getChatsId(userToken);
-    }
-
-
-    @RequestMapping(value = "/chatCreate", method = RequestMethod.POST)
-    public Integer createSession(@RequestParam(value = "users") List<Integer> userIds) {
-        return iChatDAO.createChat(userIds);
-    }
-
-    @RequestMapping(value = "/chatArchive", method = RequestMethod.GET)
-    public List<Message> getArchive(@RequestParam(value = "userToken") String userToken,
-                                    @RequestParam(value = "ChatSessionId") String chatSessionId,
-                                    @RequestParam(value = "count") Integer messages) {
-        return iChatDAO.getMessages(Integer.parseInt(chatSessionId),messages);
-    }
-
-    @MessageMapping("/chat")
-    @SendTo("/chatSession/{chatId}")
-    public Message send(@DestinationVariable String chatId, Message message) throws Exception {
-        String time = new SimpleDateFormat("HH:mm").format(new Date());
-        return new Message(message.getFrom(), message.getText(), time);
-    }
-
-
-    @RequestMapping(value = "/getProfile", method = RequestMethod.GET)
-    public User getProfile(@RequestParam(value = "profileId") String profileId) {
-        return iUserDAO.getUser(Integer.parseInt(profileId));
-    }
-
-
-    @RequestMapping(value = "/getFriends", method = RequestMethod.GET)
-    public List<String> getFriends(@RequestParam(value = "profileId") String profileId) {
-
-        Iterator iterator = iUserDAO.getFriends(Integer.parseInt(profileId)).iterator();
-        List<String> returnList = new ArrayList<>();
-        while(iterator.hasNext()){
-            returnList.add(iterator.next().toString());
-        }
-        return returnList;
-    }
-
-
-
-
-    @RequestMapping(value = "/register", method = RequestMethod.GET)
-    public String showRegistrationForm(WebRequest request, Model model) {
-        UserDto userDto = new UserDto();
-        model.addAttribute("user", userDto);
-        return "registration";
-    }
-
-
-    @RequestMapping(value = "/user/registration", method = RequestMethod.POST)
-    public ModelAndView registerUserAccount(
-            @ModelAttribute("user") @Valid UserDto accountDto,
-            BindingResult result,
-            WebRequest request,
-            Errors errors) {
-
-        Profile registered = new Profile();
-        if (!result.hasErrors()) {
-            registered = createUserAccount(accountDto, result);
-        }
-        if (registered == null) {
-            result.rejectValue("email", "message.regError");
-        }
-        if (result.hasErrors()) {
-            return new ModelAndView("registration", "user", accountDto);
-        }
-        else {
-            return new ModelAndView("successRegister", "user", accountDto);
-        }
-    }
-    private Profile createUserAccount(UserDto accountDto, BindingResult result) {
-        Profile registered = null;
-        try {
-            IUserService service = new UserService();
-            registered = service.registerNewUserAccount(accountDto);
-        } catch (EmailExistsException e) {
-            return null;
-        }
-        return registered;
-    }
+//    // jesli id =0 dodaj nowy profil
+//    @RequestMapping(value = "/editProfile", method = RequestMethod.POST)
+//    public void createProfile(@RequestParam(value = "profileData") ProfileData profileData) {
+//
+//    }
+//
+//    @RequestMapping(value = "/addPlus", method = RequestMethod.POST)
+//    public void addPlus(@RequestParam(value = "postId") Integer postId,
+//                        @RequestParam(value = "userToken") String userToken) {
+//
+//    }
+//
+//
+//    @RequestMapping(value = "/chatSessions", method = RequestMethod.GET)
+//    public List<Integer> getSessions(@RequestParam(value = "userToken") String userToken) {
+//        return iChatDAO.getChatsId(userToken);
+//    }
+//
+//
+//    @RequestMapping(value = "/chatCreate", method = RequestMethod.POST)
+//    public Integer createSession(@RequestParam(value = "users") List<Integer> userIds) {
+//        return iChatDAO.createChat(userIds);
+//    }
+//
+//    @RequestMapping(value = "/chatArchive", method = RequestMethod.GET)
+//    public List<Message> getArchive(@RequestParam(value = "userToken") String userToken,
+//                                    @RequestParam(value = "ChatSessionId") String chatSessionId,
+//                                    @RequestParam(value = "count") Integer messages) {
+//        return iChatDAO.getMessages(Integer.parseInt(chatSessionId),messages);
+//    }
+//
+//    @MessageMapping("/chat")
+//    @SendTo("/chatSession/{chatId}")
+//    public Message send(@DestinationVariable String chatId, Message message) throws Exception {
+//        String time = new SimpleDateFormat("HH:mm").format(new Date());
+//        return new Message(message.getFrom(), message.getText(), time);
+//    }
+//
+//
+//    @RequestMapping(value = "/getProfile", method = RequestMethod.GET)
+//    public User getProfile(@RequestParam(value = "profileId") String profileId) {
+//        return iUserDAO.getUser(Integer.parseInt(profileId));
+//    }
+//
+//
+//    @RequestMapping(value = "/getFriends", method = RequestMethod.GET)
+//    public List<String> getFriends(@RequestParam(value = "profileId") String profileId) {
+//
+//        Iterator iterator = iUserDAO.getFriends(Integer.parseInt(profileId)).iterator();
+//        List<String> returnList = new ArrayList<>();
+//        while(iterator.hasNext()){
+//            returnList.add(iterator.next().toString());
+//        }
+//        return returnList;
+//    }
+//
+//
+//
+//
+//    @RequestMapping(value = "/register", method = RequestMethod.GET)
+//    public String showRegistrationForm(WebRequest request, Model model) {
+//        UserDto userDto = new UserDto();
+//        model.addAttribute("user", userDto);
+//        return "registration";
+//    }
+//
+//
+//    @RequestMapping(value = "/user/registration", method = RequestMethod.POST)
+//    public ModelAndView registerUserAccount(
+//            @ModelAttribute("user") @Valid UserDto accountDto,
+//            BindingResult result,
+//            WebRequest request,
+//            Errors errors) {
+//
+//        Profile registered = new Profile();
+//        if (!result.hasErrors()) {
+//            registered = createUserAccount(accountDto, result);
+//        }
+//        if (registered == null) {
+//            result.rejectValue("email", "message.regError");
+//        }
+//        if (result.hasErrors()) {
+//            return new ModelAndView("registration", "user", accountDto);
+//        }
+//        else {
+//            return new ModelAndView("successRegister", "user", accountDto);
+//        }
+//    }
+//    private Profile createUserAccount(UserDto accountDto, BindingResult result) {
+//        Profile registered = null;
+//        try {
+//            IUserService service = new UserService();
+//            registered = service.registerNewUserAccount(accountDto);
+//        } catch (EmailExistsException e) {
+//            return null;
+//        }
+//        return registered;
+//    }
 
 
 

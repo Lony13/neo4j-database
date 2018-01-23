@@ -1,6 +1,9 @@
 package neo4j.to2.service;
 
-import neo4j.to2.domain.*;
+import neo4j.to2.domain.Answer;
+import neo4j.to2.domain.Chat;
+import neo4j.to2.domain.Topic;
+import neo4j.to2.domain.User;
 import neo4j.to2.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

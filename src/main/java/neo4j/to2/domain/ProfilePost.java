@@ -3,7 +3,7 @@ package neo4j.to2.domain;
 import org.neo4j.ogm.annotation.*;
 
 @NodeEntity
-public class ProfilePost implements Comparable<ProfilePost>{
+public class ProfilePost implements Comparable<ProfilePost> {
     @Id
     @GeneratedValue
     private Long profilePostID;

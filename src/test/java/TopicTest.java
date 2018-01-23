@@ -153,7 +153,7 @@ public class TopicTest {
     @Test
     public void getAnswersFromTopicTest(){
         Optional<Topic> optTopic = topicRepository.findById((long) 1);
-        List<Answer> answers = topicService.getAnswersFromTopic(1, 2);
+        List<Answer> answers = topicService.getAnswersFromTopic(1L);
 
         Assert.assertTrue(optTopic.get().getAnswers().containsAll(answers));
     }

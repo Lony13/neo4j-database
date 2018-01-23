@@ -16,6 +16,7 @@ public class Section {
 
     @Relationship(type = "HAVE", direction = Relationship.UNDIRECTED)
     private List<Topic> topics;
+    private Integer id;
 
     public Section() {}
 
@@ -56,5 +57,9 @@ public class Section {
             topics = new ArrayList<>();
         }
         topics.add(topic);
+    }
+
+    public Integer getId() {
+        return id;
     }
 }

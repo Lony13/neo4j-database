@@ -66,15 +66,16 @@ public class TopicService {
         return true;
     }
 
-    public List<Answer> getAnswersFromTopic(long topicID, int number) {
+    public List<Answer> getAnswersFromTopic(long topicID) {
         Optional<Topic> optTopic = topicRepository.findById(topicID);
         if(!optTopic.isPresent())
             return null;
 
-        if(optTopic.get().getAnswers().size() < number)
-            number = optTopic.get().getAnswers().size();
+//        if(optTopic.get().getAnswers().size() < number)
+//            number = optTopic.get().getAnswers().size();
 
-        return optTopic.get().getAnswers().subList(0, number);
+        return optTopic.get().getAnswers();
+//        return optTopic.get().getAnswers().subList(0, number);
     }
 
     public boolean addTopicPlus(long userID, long topicID) {

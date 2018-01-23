@@ -28,6 +28,7 @@ public class Topic {
 
     @Relationship(type = "MINUSSED_BY", direction = Relationship.UNDIRECTED)
     private List<User> usersMinus;
+    private static int id;
 
     public Topic() {
     }
@@ -43,6 +44,10 @@ public class Topic {
     public Topic(String text, User creator) {
         this.text = text;
         this.creator = creator;
+    }
+
+    public static int getId() {
+        return id;
     }
 
     public Long getTopicID() {
